@@ -12,26 +12,50 @@ export default function CombinedPage() {
   const [lastScrollY, setLastScrollY] = useState(0)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [hasAnimated, setHasAnimated] = useState(false)
 
   const productRef = useRef(null)
   const aboutRef = useRef(null)
   const heroRef = useRef(null)
   const featuresRef = useRef(null)
   const motivationalRef = useRef(null)
-  const isProductInView = useInView(productRef, { once: true, margin: "-100px" })
-  const isAboutInView = useInView(aboutRef, { once: true, margin: "-100px" })
-  const isFeaturesInView = useInView(featuresRef, { once: true, margin: "-100px" })
-  const isMotivationalInView = useInView(motivationalRef, { once: true, margin: "-100px" })
+
+  const isProductInView = useInView(productRef, { once: true, margin: "-100px", amount: isMobile ? 0.1 : 0.3 })
+  const isAboutInView = useInView(aboutRef, { once: true, margin: "-100px", amount: isMobile ? 0.1 : 0.3 })
+  const isFeaturesInView = useInView(featuresRef, { once: true, margin: "-100px", amount: isMobile ? 0.1 : 0.3 })
+  const isMotivationalInView = useInView(motivationalRef, {
+    once: true,
+    margin: "-100px",
+    amount: isMobile ? 0.1 : 0.3,
+  })
 
   const { scrollYProgress } = useScroll()
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, -100])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.7])
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 0 : -100])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, isMobile ? 1 : 0.7])
 
   const springConfig = { damping: 25, stiffness: 700 }
   const mouseX = useSpring(useMotionValue(0), springConfig)
   const mouseY = useSpring(useMotionValue(0), springConfig)
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window)
+    }
+
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+
+    if (window.innerWidth < 768) {
+      setTimeout(() => setHasAnimated(true), 2000)
+    }
+
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) return
+
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e
       const { innerWidth, innerHeight } = window
@@ -44,26 +68,7 @@ export default function CombinedPage() {
 
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [mouseX, mouseY])
-
-  useEffect(() => {
-    const controlNavbar = () => {
-      const currentScrollY = window.scrollY
-
-      if (currentScrollY < 10) {
-        setIsNavbarVisible(true)
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsNavbarVisible(false)
-      } else if (currentScrollY < lastScrollY) {
-        setIsNavbarVisible(true)
-      }
-
-      setLastScrollY(currentScrollY)
-    }
-
-    window.addEventListener("scroll", controlNavbar)
-    return () => window.removeEventListener("scroll", controlNavbar)
-  }, [lastScrollY])
+  }, [mouseX, mouseY, isMobile])
 
   const scrollToSection = (sectionId) => {
     console.log("[v0] Scrolling to section:", sectionId)
@@ -145,46 +150,48 @@ export default function CombinedPage() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1,
+        staggerChildren: isMobile ? 0.05 : 0.15,
+        delayChildren: isMobile ? 0.05 : 0.1,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 60, scale: 0.9 },
+    hidden: { opacity: 0, y: isMobile ? 20 : 60, scale: isMobile ? 1 : 0.9 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
-        duration: 0.7,
+        duration: isMobile ? 0.4 : 0.7,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
   }
 
   const floatingVariants = {
-    animate: {
-      y: [-10, 10, -10],
-      rotate: [-2, 2, -2],
-      scale: [1, 1.02, 1],
-      transition: {
-        duration: 4,
-        repeat: Number.POSITIVE_INFINITY,
-        ease: "easeInOut",
-      },
-    },
+    animate: isMobile
+      ? {}
+      : {
+          y: [-10, 10, -10],
+          rotate: [-2, 2, -2],
+          scale: [1, 1.02, 1],
+          transition: {
+            duration: 4,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          },
+        },
   }
 
   const letterVariants = {
-    hidden: { opacity: 0, y: 50, rotateX: -90 },
+    hidden: { opacity: 0, y: isMobile ? 20 : 50, rotateX: isMobile ? 0 : -90 },
     visible: {
       opacity: 1,
       y: 0,
       rotateX: 0,
       transition: {
-        duration: 0.8,
+        duration: isMobile ? 0.4 : 0.8,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
@@ -192,35 +199,37 @@ export default function CombinedPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-background relative">
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-xl"
-          animate={{
-            x: mousePosition.x * 30,
-            y: mousePosition.y * 30,
-            scale: [1, 1.2, 1],
-          }}
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-        />
-        <motion.div
-          className="absolute top-1/3 right-20 w-24 h-24 bg-secondary/5 rounded-full blur-xl"
-          animate={{
-            x: mousePosition.x * -20,
-            y: mousePosition.y * -20,
-            scale: [1.2, 1, 1.2],
-          }}
-          transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 left-1/4 w-40 h-40 bg-accent/5 rounded-full blur-xl"
-          animate={{
-            x: mousePosition.x * 15,
-            y: mousePosition.y * 15,
-            rotate: [0, 180, 360],
-          }}
-          transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
-        />
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 pointer-events-none z-0">
+          <motion.div
+            className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-xl"
+            animate={{
+              x: mousePosition.x * 30,
+              y: mousePosition.y * 30,
+              scale: [1, 1.2, 1],
+            }}
+            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+          />
+          <motion.div
+            className="absolute top-1/3 right-20 w-24 h-24 bg-secondary/5 rounded-full blur-xl"
+            animate={{
+              x: mousePosition.x * -20,
+              y: mousePosition.y * -20,
+              scale: [1.2, 1, 1.2],
+            }}
+            transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+          />
+          <motion.div
+            className="absolute bottom-1/4 left-1/4 w-40 h-40 bg-accent/5 rounded-full blur-xl"
+            animate={{
+              x: mousePosition.x * 15,
+              y: mousePosition.y * 15,
+              rotate: [0, 180, 360],
+            }}
+            transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
+          />
+        </div>
+      )}
 
       <header
         className={`fixed top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-500 ${
@@ -372,11 +381,15 @@ export default function CombinedPage() {
               backgroundImage: `url('/images/hero-skincare.png')`,
               backgroundBlendMode: "overlay",
             }}
-            animate={{
-              scale: [1, 1.05, 1],
-              x: mousePosition.x * 10,
-              y: mousePosition.y * 10,
-            }}
+            animate={
+              !isMobile
+                ? {
+                    scale: [1, 1.05, 1],
+                    x: mousePosition.x * 10,
+                    y: mousePosition.y * 10,
+                  }
+                : {}
+            }
             transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10" />
@@ -391,7 +404,7 @@ export default function CombinedPage() {
               className="space-y-4 sm:space-y-6 text-center lg:text-left order-2 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: isMobile ? 0.5 : 0.8, ease: "easeOut" }}
             >
               <div className="overflow-hidden">
                 <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light leading-tight text-foreground">
@@ -401,7 +414,7 @@ export default function CombinedPage() {
                       variants={letterVariants}
                       initial="hidden"
                       animate="visible"
-                      transition={{ delay: index * 0.1 }}
+                      transition={{ delay: index * (isMobile ? 0.05 : 0.1) }}
                       className="inline-block"
                     >
                       {letter}
@@ -411,7 +424,7 @@ export default function CombinedPage() {
                     className="block italic text-muted-foreground font-light"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, delay: 0.8 }}
+                    transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.3 : 0.8 }}
                   >
                     {"Beauty Everyday".split("").map((letter, index) => (
                       <motion.span
@@ -419,7 +432,7 @@ export default function CombinedPage() {
                         variants={letterVariants}
                         initial="hidden"
                         animate="visible"
-                        transition={{ delay: 1 + index * 0.1 }}
+                        transition={{ delay: (isMobile ? 0.5 : 1) + index * (isMobile ? 0.05 : 0.1) }}
                         className="inline-block"
                       >
                         {letter}
@@ -474,36 +487,48 @@ export default function CombinedPage() {
               className="relative order-1 lg:order-2"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: isMobile ? 0.5 : 0.8, delay: 0.3 }}
             >
               <div className="relative">
                 <motion.img
                   src="/images/product-sensitive-skin.png"
                   alt="Natural Skincare"
                   className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl"
-                  whileHover={{
-                    scale: 1.02,
-                    rotateY: 5,
-                    rotateX: 5,
-                  }}
+                  whileHover={
+                    !isMobile
+                      ? {
+                          scale: 1.02,
+                          rotateY: 5,
+                          rotateX: 5,
+                        }
+                      : {}
+                  }
                   transition={{ duration: 0.3 }}
-                  animate={{
-                    rotateY: mousePosition.x * 5,
-                    rotateX: mousePosition.y * -5,
-                  }}
+                  animate={
+                    !isMobile
+                      ? {
+                          rotateY: mousePosition.x * 5,
+                          rotateX: mousePosition.y * -5,
+                        }
+                      : {}
+                  }
                 />
                 <motion.div
                   className="absolute top-4 right-4 sm:top-8 sm:right-8 bg-background/95 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg border border-border"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 1 }}
-                  whileHover={{
-                    scale: 1.1,
-                    rotate: [0, -5, 5, 0],
-                    boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
-                  }}
+                  transition={{ duration: 0.5, delay: isMobile ? 0.5 : 1 }}
+                  whileHover={
+                    !isMobile
+                      ? {
+                          scale: 1.1,
+                          rotate: [0, -5, 5, 0],
+                          boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+                        }
+                      : {}
+                  }
                   variants={floatingVariants}
-                  animate="animate"
+                  animate={!isMobile ? "animate" : {}}
                 >
                   <div className="flex items-center gap-2">
                     <motion.img
@@ -537,12 +562,16 @@ export default function CombinedPage() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                whileHover={{
-                  y: -10,
-                  scale: 1.05,
-                  rotateY: 5,
-                  boxShadow: "0 25px 50px rgba(0,0,0,0.1)",
-                }}
+                whileHover={
+                  !isMobile
+                    ? {
+                        y: -10,
+                        scale: 1.05,
+                        rotateY: 5,
+                        boxShadow: "0 25px 50px rgba(0,0,0,0.1)",
+                      }
+                    : {}
+                }
                 transition={{ duration: 0.3 }}
                 onMouseEnter={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect()
@@ -562,11 +591,15 @@ export default function CombinedPage() {
                   <CardContent className="p-6 text-center space-y-4 relative z-10">
                     <motion.div
                       className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto relative"
-                      whileHover={{
-                        rotate: 360,
-                        scale: 1.2,
-                        boxShadow: "0 0 30px rgba(var(--primary), 0.3)",
-                      }}
+                      whileHover={
+                        !isMobile
+                          ? {
+                              rotate: 360,
+                              scale: 1.2,
+                              boxShadow: "0 0 30px rgba(var(--primary), 0.3)",
+                            }
+                          : {}
+                      }
                       transition={{ duration: 0.5 }}
                     >
                       <feature.icon className="w-6 h-6 text-primary" />
@@ -604,11 +637,15 @@ export default function CombinedPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{
-                  scale: 1.1,
-                  color: "var(--primary)",
-                  textShadow: "0 0 20px rgba(var(--primary), 0.5)",
-                }}
+                whileHover={
+                  !isMobile
+                    ? {
+                        scale: 1.1,
+                        color: "var(--primary)",
+                        textShadow: "0 0 20px rgba(var(--primary), 0.5)",
+                      }
+                    : {}
+                }
               >
                 {word}
               </motion.span>
@@ -618,7 +655,14 @@ export default function CombinedPage() {
               initial={{ opacity: 0, scale: 0 }}
               animate={isMotivationalInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ scale: 1.3, rotate: 10 }}
+              whileHover={
+                !isMobile
+                  ? {
+                      scale: 1.3,
+                      rotate: 10,
+                    }
+                  : {}
+              }
             >
               <Heart className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
             </motion.span>
@@ -629,11 +673,15 @@ export default function CombinedPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: (index + 3) * 0.1 }}
-                whileHover={{
-                  scale: 1.1,
-                  color: "var(--primary)",
-                  textShadow: "0 0 20px rgba(var(--primary), 0.5)",
-                }}
+                whileHover={
+                  !isMobile
+                    ? {
+                        scale: 1.1,
+                        color: "var(--primary)",
+                        textShadow: "0 0 20px rgba(var(--primary), 0.5)",
+                      }
+                    : {}
+                }
               >
                 {word}
               </motion.span>
@@ -643,7 +691,14 @@ export default function CombinedPage() {
               initial={{ opacity: 0, scale: 0 }}
               animate={isMotivationalInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              whileHover={{ scale: 1.3, rotate: -10 }}
+              whileHover={
+                !isMobile
+                  ? {
+                      scale: 1.3,
+                      rotate: -10,
+                    }
+                  : {}
+              }
             >
               <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
             </motion.span>
@@ -660,11 +715,15 @@ export default function CombinedPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-                  whileHover={{
-                    scale: 1.1,
-                    rotate: [0, -5, 5, 0],
-                    color: "var(--primary)",
-                  }}
+                  whileHover={
+                    !isMobile
+                      ? {
+                          scale: 1.1,
+                          rotate: [0, -5, 5, 0],
+                          color: "var(--primary)",
+                        }
+                      : {}
+                  }
                 >
                   {word}
                 </motion.span>
@@ -674,7 +733,14 @@ export default function CombinedPage() {
                 initial={{ opacity: 0, scale: 0 }}
                 animate={isMotivationalInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
                 transition={{ duration: 0.5, delay: 1.2 }}
-                whileHover={{ scale: 1.3, rotate: 15 }}
+                whileHover={
+                  !isMobile
+                    ? {
+                        scale: 1.3,
+                        rotate: 15,
+                      }
+                    : {}
+                }
               >
                 <Leaf className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
               </motion.span>
@@ -702,12 +768,16 @@ export default function CombinedPage() {
               <motion.div
                 key={product.id}
                 variants={itemVariants}
-                whileHover={{
-                  y: -12,
-                  scale: 1.02,
-                  rotateY: 5,
-                  boxShadow: "0 30px 60px rgba(0,0,0,0.15)",
-                }}
+                whileHover={
+                  !isMobile
+                    ? {
+                        y: -12,
+                        scale: 1.02,
+                        rotateY: 5,
+                        boxShadow: "0 30px 60px rgba(0,0,0,0.15)",
+                      }
+                    : {}
+                }
                 transition={{ duration: 0.3 }}
                 className="group"
               >
@@ -722,10 +792,14 @@ export default function CombinedPage() {
                         src={product.image || "/placeholder.svg"}
                         alt={product.name}
                         className="w-full h-full object-cover"
-                        whileHover={{
-                          scale: 1.1,
-                          rotate: [0, -2, 2, 0],
-                        }}
+                        whileHover={
+                          !isMobile
+                            ? {
+                                scale: 1.1,
+                                rotate: [0, -2, 2, 0],
+                              }
+                            : {}
+                        }
                         transition={{ duration: 0.5 }}
                       />
                     </div>
@@ -741,11 +815,15 @@ export default function CombinedPage() {
                       <p className="text-muted-foreground text-sm">{product.description}</p>
                       <motion.p
                         className="text-xl font-semibold text-foreground"
-                        whileHover={{
-                          scale: 1.1,
-                          color: "var(--primary)",
-                          textShadow: "0 0 10px rgba(var(--primary), 0.3)",
-                        }}
+                        whileHover={
+                          !isMobile
+                            ? {
+                                scale: 1.1,
+                                color: "var(--primary)",
+                                textShadow: "0 0 10px rgba(var(--primary), 0.3)",
+                              }
+                            : {}
+                        }
                       >
                         {product.price}
                       </motion.p>
@@ -795,21 +873,21 @@ export default function CombinedPage() {
               className="space-y-4 sm:space-y-6 text-center lg:text-left order-2 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
               animate={isAboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: isMobile ? 0.5 : 0.8 }}
             >
               <div className="space-y-3 sm:space-y-4">
                 <motion.h2
                   className="font-geist text-xl sm:text-2xl lg:text-3xl font-bold text-foreground"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isAboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
+                  transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.2 }}
                 >
                   Gentle on your skin,
                   <motion.span
                     className="block text-secondary"
                     initial={{ opacity: 0, x: -20 }}
                     animate={isAboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
+                    transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.4 }}
                   >
                     effective on cleansing.
                   </motion.span>
@@ -818,7 +896,7 @@ export default function CombinedPage() {
                   className="font-manrope text-sm sm:text-base text-muted-foreground leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isAboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
+                  transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.3 }}
                 >
                   We believe organic skincare is a beautiful, luxurious way to care for your face. Our organic facewash
                   formulations are designed to be gentle yet effective, providing you with the confidence that comes
@@ -828,7 +906,7 @@ export default function CombinedPage() {
                   className="font-manrope text-xs sm:text-sm text-muted-foreground leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isAboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
+                  transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.5 }}
                 >
                   Founded in 2025, VYBE4You represents a new generation of beauty products that prioritize both your
                   health and the environment. Every facewash is carefully crafted with sustainably sourced organic
@@ -841,14 +919,14 @@ export default function CombinedPage() {
               className="relative order-1 lg:order-2"
               initial={{ opacity: 0, x: 50 }}
               animate={isAboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: isMobile ? 0.8 : 0.8, delay: 0.2 }}
             >
               <div className="relative">
                 <motion.img
                   src="/images/skincare-routine.png"
                   alt="Natural Beauty Products"
                   className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl"
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={!isMobile ? { scale: 1.02 } : {}}
                   transition={{ duration: 0.3 }}
                 />
               </div>
