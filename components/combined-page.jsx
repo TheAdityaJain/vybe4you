@@ -66,11 +66,17 @@ export default function CombinedPage() {
   }, [lastScrollY])
 
   const scrollToSection = (sectionId) => {
+    console.log("[v0] Scrolling to section:", sectionId)
     const element = document.getElementById(sectionId)
     if (element) {
+      console.log("[v0] Element found, scrolling...")
       element.scrollIntoView({ behavior: "smooth" })
+      setTimeout(() => {
+        setIsMenuOpen(false)
+      }, 100)
+    } else {
+      console.log("[v0] Element not found:", sectionId)
     }
-    setIsMenuOpen(false)
   }
 
   const products = [
@@ -299,11 +305,21 @@ export default function CombinedPage() {
               {["Home", "Products", "About", "Contact"].map((item, index) => (
                 <motion.button
                   key={item}
-                  onClick={() => scrollToSection(item.toLowerCase() === "home" ? "hero" : item.toLowerCase())}
-                  className="text-foreground hover:text-primary transition-all duration-300 text-left py-3 px-2 rounded-lg hover:bg-muted/50 w-full"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    console.log("[v0] Mobile menu item clicked:", item)
+                    scrollToSection(item.toLowerCase() === "home" ? "hero" : item.toLowerCase())
+                  }}
+                  className="text-foreground hover:text-primary transition-all duration-300 text-left py-4 px-4 rounded-lg hover:bg-muted/50 w-full font-medium text-base"
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: isMenuOpen ? 0 : -20, opacity: isMenuOpen ? 1 : 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
+                  style={{
+                    minHeight: "48px",
+                    touchAction: "manipulation",
+                    WebkitTapHighlightColor: "transparent",
+                  }}
                 >
                   {item}
                 </motion.button>
@@ -314,7 +330,20 @@ export default function CombinedPage() {
                 animate={{ x: isMenuOpen ? 0 : -20, opacity: isMenuOpen ? 1 : 0 }}
                 transition={{ duration: 0.3, delay: 0.4 }}
               >
-                <Button onClick={() => scrollToSection("contact")} className="w-full py-3">
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    console.log("[v0] Get In Touch clicked")
+                    scrollToSection("contact")
+                  }}
+                  className="w-full py-4 text-base font-medium"
+                  style={{
+                    minHeight: "48px",
+                    touchAction: "manipulation",
+                    WebkitTapHighlightColor: "transparent",
+                  }}
+                >
                   Get In Touch
                 </Button>
               </motion.div>
