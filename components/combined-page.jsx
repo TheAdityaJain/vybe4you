@@ -296,11 +296,11 @@ export default function CombinedPage() {
             className="md:hidden overflow-hidden bg-background/95 backdrop-blur border-b border-border"
           >
             <nav className="flex flex-col space-y-1 p-3">
-              {["Home", "Products", "Features", "About", "Motivational", "Contact"].map((item, index) => (
+              {["Home", "Products", "About", "Contact"].map((item, index) => (
                 <motion.button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase() === "home" ? "hero" : item.toLowerCase())}
-                  className="text-foreground hover:text-primary transition-all duration-300 text-left py-3 px-2 rounded-lg hover:bg-muted/50"
+                  className="text-foreground hover:text-primary transition-all duration-300 text-left py-3 px-2 rounded-lg hover:bg-muted/50 w-full"
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: isMenuOpen ? 0 : -20, opacity: isMenuOpen ? 1 : 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
