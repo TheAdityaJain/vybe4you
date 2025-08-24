@@ -809,7 +809,7 @@ export default function CombinedPage() {
               },
               {
                 title: "Contact Us",
-                content: "📧 hello@vybeforyou.com\n📞 +1 (555) 123-4567\n📍 123 Beauty Lane, Skincare City",
+                content: "📧 vybe4you@gmail.com\n📞 +91 96946 06000\n📍 Kota, Rajasthan",
                 showSocial: true,
               },
             ].map((section, index) => (
@@ -862,7 +862,7 @@ export default function CombinedPage() {
                       <Facebook className="w-5 h-5" />
                     </motion.a>
                     <motion.a
-                      href="mailto:hello@vybeforyou.com"
+                      href="mailto:vybe4you@gmail.com"
                       className="text-background/80 hover:text-background transition-colors p-2 hover:bg-background/10 rounded-lg"
                       whileHover={{ scale: 1.2, rotate: 10 }}
                       whileTap={{ scale: 0.9 }}
