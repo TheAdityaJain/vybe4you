@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Menu, X, Leaf, Shield, Award, Truck } from "lucide-react"
+import { Menu, X, Leaf, Shield, Award, Truck, Instagram, Facebook, Mail } from "lucide-react"
 import { motion, useInView, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion"
 
 export default function CombinedPage() {
@@ -841,17 +841,34 @@ export default function CombinedPage() {
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
                   >
-                    {["📘", "📷", "🐦"].map((emoji, emojiIndex) => (
-                      <motion.a
-                        key={emojiIndex}
-                        href="#"
-                        className="hover:text-background transition-colors text-lg p-2"
-                        whileHover={{ scale: 1.2, rotate: 10 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        {emoji}
-                      </motion.a>
-                    ))}
+                    <motion.a
+                      href="https://instagram.com/vybeforyou_"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-background/80 hover:text-background transition-colors p-2 hover:bg-background/10 rounded-lg"
+                      whileHover={{ scale: 1.2, rotate: 10 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <Instagram className="w-5 h-5" />
+                    </motion.a>
+                    <motion.a
+                      href="https://facebook.com/vybe4you"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-background/80 hover:text-background transition-colors p-2 hover:bg-background/10 rounded-lg"
+                      whileHover={{ scale: 1.2, rotate: 10 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <Facebook className="w-5 h-5" />
+                    </motion.a>
+                    <motion.a
+                      href="mailto:hello@vybeforyou.com"
+                      className="text-background/80 hover:text-background transition-colors p-2 hover:bg-background/10 rounded-lg"
+                      whileHover={{ scale: 1.2, rotate: 10 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <Mail className="w-5 h-5" />
+                    </motion.a>
                   </motion.div>
                 )}
               </motion.div>
@@ -865,9 +882,7 @@ export default function CombinedPage() {
             transition={{ duration: 0.5, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <p className="font-manrope text-xs sm:text-sm text-background/60">
-              © 2025 VYBE4You. All rights reserved.
-            </p>
+            <p className="font-manrope text-xs sm:text-sm text-background/60">© 2025 VYBE4You. All rights reserved.</p>
           </motion.div>
         </div>
       </motion.footer>
