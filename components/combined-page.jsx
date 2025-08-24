@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Menu, X, Leaf, Shield, Award, Truck, Instagram, Facebook, Mail } from "lucide-react"
+import { Menu, X, Leaf, Shield, Award, Truck, Instagram, Facebook, Mail, Heart, Sparkles } from "lucide-react"
 import { motion, useInView, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion"
 
 export default function CombinedPage() {
@@ -552,7 +552,7 @@ export default function CombinedPage() {
         </div>
       </section>
 
-      <section className="py-12 sm:py-16 lg:py-20 bg-muted/30" ref={motivationalRef}>
+      <section className="py-6 sm:py-8 bg-muted/30" ref={motivationalRef}>
         <div className="container mx-auto px-3 sm:px-4 lg:px-8 max-w-4xl text-center">
           <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-foreground px-2"
@@ -560,7 +560,7 @@ export default function CombinedPage() {
             animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8 }}
           >
-            {"Refresh your skin, 🤎 love yourself, 🪞".split(" ").map((word, index) => (
+            {"Refresh your skin,".split(" ").map((word, index) => (
               <motion.span
                 key={index}
                 className="inline-block mr-2"
@@ -577,14 +577,48 @@ export default function CombinedPage() {
               </motion.span>
             ))}
             <motion.span
+              className="inline-block mx-2"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={isMotivationalInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              whileHover={{ scale: 1.3, rotate: 10 }}
+            >
+              <Heart className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
+            </motion.span>
+            {"love yourself,".split(" ").map((word, index) => (
+              <motion.span
+                key={index + 10}
+                className="inline-block mr-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: (index + 3) * 0.1 }}
+                whileHover={{
+                  scale: 1.1,
+                  color: "var(--primary)",
+                  textShadow: "0 0 20px rgba(var(--primary), 0.5)",
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
+            <motion.span
+              className="inline-block mx-2"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={isMotivationalInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              whileHover={{ scale: 1.3, rotate: -10 }}
+            >
+              <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
+            </motion.span>
+            <motion.span
               className="block mt-2"
               initial={{ opacity: 0, y: 20 }}
               animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              {"renew your glow. 🌿".split(" ").map((word, index) => (
+              {"renew your glow.".split(" ").map((word, index) => (
                 <motion.span
-                  key={index}
+                  key={index + 20}
                   className="inline-block mr-2"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -598,6 +632,15 @@ export default function CombinedPage() {
                   {word}
                 </motion.span>
               ))}
+              <motion.span
+                className="inline-block ml-2"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={isMotivationalInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                transition={{ duration: 0.5, delay: 1.2 }}
+                whileHover={{ scale: 1.3, rotate: 15 }}
+              >
+                <Leaf className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
+              </motion.span>
             </motion.span>
           </motion.h2>
         </div>
