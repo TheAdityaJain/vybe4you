@@ -70,7 +70,15 @@ export default function CombinedPage() {
     const element = document.getElementById(sectionId)
     if (element) {
       console.log("[v0] Element found, scrolling...")
-      element.scrollIntoView({ behavior: "smooth" })
+      const navbarHeight = window.innerWidth >= 1024 ? 80 : window.innerWidth >= 640 ? 64 : 56
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+      const offsetPosition = elementPosition - navbarHeight
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      })
+
       setTimeout(() => {
         setIsMenuOpen(false)
       }, 100)
