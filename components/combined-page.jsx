@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Menu, X, Leaf, Shield, Award, Truck, Instagram, Facebook, Mail, Heart, Sparkles } from "lucide-react"
+import { Menu, X, Leaf, Instagram, Facebook, Mail, Heart, Sparkles, Recycle, Droplets, Zap } from "lucide-react"
 import { motion, useInView, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion"
 
 export default function CombinedPage() {
@@ -20,14 +20,20 @@ export default function CombinedPage() {
   const heroRef = useRef(null)
   const featuresRef = useRef(null)
   const motivationalRef = useRef(null)
+  const ecoFriendlyRef = useRef(null)
 
-  const isProductInView = useInView(productRef, { once: true, margin: "-100px", amount: isMobile ? 0.1 : 0.3 })
-  const isAboutInView = useInView(aboutRef, { once: true, margin: "-100px", amount: isMobile ? 0.1 : 0.3 })
-  const isFeaturesInView = useInView(featuresRef, { once: true, margin: "-100px", amount: isMobile ? 0.1 : 0.3 })
+  const isProductInView = useInView(productRef, { once: true, margin: "-100px", amount: 0.3 })
+  const isAboutInView = useInView(aboutRef, { once: true, margin: "-100px", amount: 0.3 })
+  const isFeaturesInView = useInView(featuresRef, { once: true, margin: "-100px", amount: 0.3 })
   const isMotivationalInView = useInView(motivationalRef, {
     once: true,
     margin: "-100px",
-    amount: isMobile ? 0.1 : 0.3,
+    amount: 0.3,
+  })
+  const isEcoFriendlyInView = useInView(ecoFriendlyRef, {
+    once: true,
+    margin: "0px",
+    amount: 0.1,
   })
 
   const { scrollYProgress } = useScroll()
@@ -52,6 +58,28 @@ export default function CombinedPage() {
 
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+
+      if (currentScrollY < 10) {
+        // Always show navbar at top of page
+        setIsNavbarVisible(true)
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down - hide navbar
+        setIsNavbarVisible(false)
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up - show navbar
+        setIsNavbarVisible(true)
+      }
+
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [lastScrollY])
 
   useEffect(() => {
     if (isMobile) return
@@ -125,23 +153,23 @@ export default function CombinedPage() {
   const features = [
     {
       icon: Leaf,
-      title: "Natural Formula",
-      description: "Crafted with pure skin-loving ingredients for optimal results",
+      title: "Natural Ingredients",
+      description: "Pure, plant-powered goodness straight from nature",
     },
     {
-      icon: Shield,
-      title: "Cruelty-Free",
-      description: "Our products are never tested on animals and ethically sourced",
+      icon: Droplets,
+      title: "Waterless Formulations",
+      description: "Potent blends with no dilution, just results",
     },
     {
-      icon: Award,
-      title: "Expert Approved",
-      description: "Carefully tested to ensure quality and effectiveness",
+      icon: Zap,
+      title: "Minimalist & Effective",
+      description: "Fuss-free blends that do what they promise",
     },
     {
-      icon: Truck,
-      title: "Free Shipping",
-      description: "Delivered to your doorstep within 2-3 business days",
+      icon: Sparkles,
+      title: "Everyday Glow",
+      description: "Crafted for daily rituals that bring consistent, visible results",
     },
   ]
 
@@ -264,7 +292,13 @@ export default function CombinedPage() {
               {["Home", "Products", "About", "Contact"].map((item, index) => (
                 <motion.button
                   key={item}
-                  onClick={() => scrollToSection(item.toLowerCase() === "home" ? "hero" : item.toLowerCase())}
+                  onClick={() => {
+                    const sectionId = item.toLowerCase() === "home" ? "hero" : item.toLowerCase()
+                    const element = document.getElementById(sectionId)
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth", block: "start" })
+                    }
+                  }}
                   className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-sm lg:text-base"
                   whileHover={{ y: -2, scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -283,13 +317,18 @@ export default function CombinedPage() {
               ))}
             </nav>
 
-            <div className="hidden md:flex items-center">
+            <div className="hidden md:flex items-center space-x-4">
               <motion.div
                 whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(0,0,0,0.1)" }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Button
-                  onClick={() => scrollToSection("contact")}
+                  onClick={() => {
+                    const element = document.getElementById("contact")
+                    if (element) {
+                      element.scrollIntoView({ behavior: "instant", block: "start" })
+                    }
+                  }}
                   className="bg-primary text-primary-foreground hover:bg-primary/90 px-3 lg:px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:shadow-lg text-xs lg:text-base"
                 >
                   Get In Touch
@@ -326,7 +365,12 @@ export default function CombinedPage() {
                     e.preventDefault()
                     e.stopPropagation()
                     console.log("[v0] Mobile menu item clicked:", item)
-                    scrollToSection(item.toLowerCase() === "home" ? "hero" : item.toLowerCase())
+                    const sectionId = item.toLowerCase() === "home" ? "hero" : item.toLowerCase()
+                    const element = document.getElementById(sectionId)
+                    if (element) {
+                      element.scrollIntoView({ behavior: "instant", block: "start" })
+                    }
+                    setIsMenuOpen(false)
                   }}
                   className="text-foreground hover:text-primary transition-all duration-300 text-left py-4 px-4 rounded-lg hover:bg-muted/50 w-full font-medium text-base"
                   initial={{ x: -20, opacity: 0 }}
@@ -352,7 +396,11 @@ export default function CombinedPage() {
                     e.preventDefault()
                     e.stopPropagation()
                     console.log("[v0] Get In Touch clicked")
-                    scrollToSection("contact")
+                    const element = document.getElementById("contact")
+                    if (element) {
+                      element.scrollIntoView({ behavior: "instant", block: "start" })
+                    }
+                    setIsMenuOpen(false)
                   }}
                   className="w-full py-4 text-base font-medium"
                   style={{
@@ -550,13 +598,13 @@ export default function CombinedPage() {
         </motion.div>
       </section>
 
-      <section className="py-12 sm:py-16 bg-background" ref={featuresRef}>
+      <section className="py-6 sm:py-8 bg-background" ref={featuresRef}>
         <div className="container mx-auto px-3 sm:px-4 lg:px-8 max-w-6xl">
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
             variants={containerVariants}
             initial="hidden"
-            animate={isFeaturesInView ? "visible" : "hidden"}
+            animate={isMobile ? "visible" : isFeaturesInView ? "visible" : "hidden"}
           >
             {features.map((feature, index) => (
               <motion.div
@@ -622,18 +670,26 @@ export default function CombinedPage() {
         </div>
       </section>
 
-      <section className="py-6 sm:py-8 bg-muted/30" ref={motivationalRef}>
-        <div className="container mx-auto px-3 sm:px-4 lg:px-8 max-w-4xl text-center">
+      <section
+        className="py-6 sm:py-8 bg-muted/30 relative bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/images/organic-ingredients.png')",
+          backgroundBlendMode: "overlay",
+        }}
+        ref={motivationalRef}
+      >
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="container mx-auto px-3 sm:px-4 lg:px-8 max-w-4xl text-center relative z-10">
           <motion.h2
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-foreground px-2"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light leading-relaxed sm:leading-tight text-white px-2"
             initial={{ opacity: 0, y: 30 }}
             animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8 }}
           >
-            {"Refresh your skin,".split(" ").map((word, index) => (
+            {"Refresh your skin".split(" ").map((word, index) => (
               <motion.span
                 key={index}
-                className="inline-block mr-2"
+                className="inline-block mr-1 sm:mr-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -651,7 +707,7 @@ export default function CombinedPage() {
               </motion.span>
             ))}
             <motion.span
-              className="inline-block mx-2"
+              className="inline-block mx-1 sm:mx-2"
               initial={{ opacity: 0, scale: 0 }}
               animate={isMotivationalInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -664,14 +720,14 @@ export default function CombinedPage() {
                   : {}
               }
             >
-              <Heart className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
+              <Heart className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 inline text-primary" />
             </motion.span>
-            {"love yourself,".split(" ").map((word, index) => (
+            {" Love yourself".split(" ").map((word, index) => (
               <motion.span
                 key={index + 10}
-                className="inline-block mr-2"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                className="inline-block mr-1 sm:mr-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={isMotivationalInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                 transition={{ duration: 0.5, delay: (index + 3) * 0.1 }}
                 whileHover={
                   !isMobile
@@ -687,7 +743,7 @@ export default function CombinedPage() {
               </motion.span>
             ))}
             <motion.span
-              className="inline-block mx-2"
+              className="inline-block mx-1 sm:mx-2"
               initial={{ opacity: 0, scale: 0 }}
               animate={isMotivationalInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
@@ -700,18 +756,18 @@ export default function CombinedPage() {
                   : {}
               }
             >
-              <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
+              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 inline text-primary" />
             </motion.span>
             <motion.span
-              className="block mt-2"
+              className="mt-1 sm:mt-2"
               initial={{ opacity: 0, y: 20 }}
               animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              {"renew your glow.".split(" ").map((word, index) => (
+              {" Renew your glow".split(" ").map((word, index) => (
                 <motion.span
                   key={index + 20}
-                  className="inline-block mr-2"
+                  className="inline-block mr-1 sm:mr-2"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isMotivationalInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
@@ -729,7 +785,7 @@ export default function CombinedPage() {
                 </motion.span>
               ))}
               <motion.span
-                className="inline-block ml-2"
+                className="inline-block ml-1 sm:ml-2"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={isMotivationalInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
                 transition={{ duration: 0.5, delay: 1.2 }}
@@ -742,27 +798,29 @@ export default function CombinedPage() {
                     : {}
                 }
               >
-                <Leaf className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
+                <Leaf className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 inline text-primary" />
               </motion.span>
             </motion.span>
           </motion.h2>
         </div>
       </section>
 
-      <section id="products" className="py-12 sm:py-16 bg-background" ref={productRef}>
-        <div className="container mx-auto px-3 sm:px-4 lg:px-8 max-w-6xl">
+      <section id="products" className="py-6 sm:py-8 bg-background" ref={productRef}>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-8 sm:mb-12"
             initial={{ opacity: 0, y: 30 }}
-            animate={isProductInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8 }}
-          ></motion.div>
+            animate={isMobile ? { opacity: 1, y: 0 } : isProductInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: isMobile ? 0.5 : 0.8 }}
+          >
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-foreground mb-4">Our Products</h2>
+          </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto"
             variants={containerVariants}
             initial="hidden"
-            animate={isProductInView ? "visible" : "hidden"}
+            animate={isMobile ? "visible" : isProductInView ? "visible" : "hidden"}
           >
             {products.map((product, index) => (
               <motion.div
@@ -779,19 +837,19 @@ export default function CombinedPage() {
                     : {}
                 }
                 transition={{ duration: 0.3 }}
-                className="group"
+                className="group w-full"
               >
-                <Card className="hover:shadow-xl transition-all duration-500 bg-card border-border h-full overflow-hidden relative">
+                <Card className="hover:shadow-xl transition-all duration-500 bg-card border-border h-full overflow-hidden relative w-full">
                   <motion.div
                     className={`absolute inset-0 bg-gradient-to-br ${product.color} opacity-0 group-hover:opacity-100`}
                     transition={{ duration: 0.3 }}
                   />
                   <CardContent className="p-0 relative z-10">
-                    <div className="aspect-square bg-muted/50 relative overflow-hidden">
+                    <div className="aspect-square bg-muted/50 relative overflow-hidden w-full">
                       <motion.img
                         src={product.image || "/placeholder.svg"}
                         alt={product.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover object-center"
                         whileHover={
                           !isMobile
                             ? {
@@ -804,7 +862,7 @@ export default function CombinedPage() {
                       />
                     </div>
                     <motion.div
-                      className="p-6 text-center space-y-3"
+                      className="p-4 sm:p-6 text-center space-y-3"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.2 + 0.3 }}
@@ -836,16 +894,24 @@ export default function CombinedPage() {
         </div>
       </section>
 
-      <section className="py-12 sm:py-16 lg:py-20 bg-foreground text-background relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground via-foreground/95 to-foreground">
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-            style={{
-              backgroundImage: `url('/images/about-natural-ingredients.png')`,
-              backgroundBlendMode: "overlay",
-            }}
-          />
-        </div>
+      <section
+        className="py-6 sm:py-8 relative overflow-hidden"
+        style={{
+          backgroundImage: `url('/images/about-natural-ingredients.png')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+        ref={ecoFriendlyRef}
+      >
+        <div className="absolute inset-0 bg-black/80"></div>
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          style={{
+            backgroundImage: `url('/images/about-natural-ingredients.png')`,
+            backgroundBlendMode: "overlay",
+          }}
+        />
         <div className="container mx-auto px-3 sm:px-4 lg:px-8 max-w-4xl relative z-10">
           <motion.div
             className="text-center space-y-4 sm:space-y-6"
@@ -854,39 +920,135 @@ export default function CombinedPage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight">
-              Eco-Friendly,
-              <span className="block italic text-background/80">Skin-Friendly</span>
-            </h2>
-            <p className="text-sm sm:text-base lg:text-lg text-background/80 max-w-2xl mx-auto leading-relaxed px-2">
-              Our commitment to sustainability means every product is crafted with respect for both your skin and our
-              planet.
-            </p>
+            <motion.h2
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-white px-2"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isEcoFriendlyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8 }}
+            >
+              {"Eco-Friendly".split("").map((word, index) => (
+                <motion.span
+                  key={index}
+                  className="inline-block mr-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isEcoFriendlyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={
+                    !isMobile
+                      ? {
+                          scale: 1.1,
+                          color: "var(--primary)",
+                          textShadow: "0 0 20px rgba(var(--primary), 0.5)",
+                        }
+                      : {}
+                  }
+                >
+                  {word}
+                </motion.span>
+              ))}
+              <motion.span
+                className="inline-block mx-2"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={isEcoFriendlyInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                whileHover={
+                  !isMobile
+                    ? {
+                        scale: 1.3,
+                        rotate: 10,
+                      }
+                    : {}
+                }
+              >
+                <Recycle className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
+              </motion.span>
+              <motion.span
+                className="inline-block italic"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isEcoFriendlyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                {" Skin-Friendly".split(" ").map((word, index) => (
+                  <motion.span
+                    key={index + 10}
+                    className="inline-block mr-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isEcoFriendlyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                    whileHover={
+                      !isMobile
+                        ? {
+                            scale: 1.1,
+                            color: "var(--primary)",
+                            textShadow: "0 0 20px rgba(var(--primary), 0.5)",
+                          }
+                        : {}
+                    }
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+                <motion.span
+                  className="inline-block ml-2"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={isEcoFriendlyInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                  whileHover={
+                    !isMobile
+                      ? {
+                          scale: 1.3,
+                          rotate: -10,
+                        }
+                      : {}
+                  }
+                >
+                  <Heart className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
+                </motion.span>
+              </motion.span>
+            </motion.h2>
           </motion.div>
         </div>
       </section>
 
-      <section id="about" className="py-12 sm:py-16 bg-background" ref={aboutRef}>
-        <div className="container mx-auto px-3 sm:px-4 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <section className="py-6 sm:py-8 bg-background" id="about" ref={aboutRef}>
+        <div className="container mx-auto px-3 sm:px-4 lg:px-8 max-w-6xl">
+          <motion.div
+            className="text-center mb-8 sm:mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isMobile ? { opacity: 1, y: 0 } : isAboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: isMobile ? 0.5 : 0.6 }}
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-foreground mb-3 sm:mb-4">About Us</h2>
+          </motion.div>
+
+          <motion.div
+            className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isMobile ? "visible" : isAboutInView ? "visible" : "hidden"}
+          >
             <motion.div
               className="space-y-4 sm:space-y-6 text-center lg:text-left order-2 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
-              animate={isAboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+              animate={isMobile ? { opacity: 1, x: 0 } : isAboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
               transition={{ duration: isMobile ? 0.5 : 0.8 }}
             >
               <div className="space-y-3 sm:space-y-4">
                 <motion.h2
                   className="font-geist text-xl sm:text-2xl lg:text-3xl font-bold text-foreground"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={isAboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  animate={
+                    isMobile ? { opacity: 1, y: 0 } : isAboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                  }
                   transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.2 }}
                 >
                   Gentle on your skin,
                   <motion.span
                     className="block text-secondary"
                     initial={{ opacity: 0, x: -20 }}
-                    animate={isAboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    animate={
+                      isMobile ? { opacity: 1, x: 0 } : isAboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
+                    }
                     transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.4 }}
                   >
                     effective on cleansing.
@@ -895,7 +1057,9 @@ export default function CombinedPage() {
                 <motion.p
                   className="font-manrope text-sm sm:text-base text-muted-foreground leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={isAboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  animate={
+                    isMobile ? { opacity: 1, y: 0 } : isAboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                  }
                   transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.3 }}
                 >
                   We believe organic skincare is a beautiful, luxurious way to care for your face. Our organic facewash
@@ -905,7 +1069,9 @@ export default function CombinedPage() {
                 <motion.p
                   className="font-manrope text-xs sm:text-sm text-muted-foreground leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={isAboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  animate={
+                    isMobile ? { opacity: 1, y: 0 } : isAboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                  }
                   transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.5 }}
                 >
                   Founded in 2025, VYBE4You represents a new generation of beauty products that prioritize both your
@@ -918,7 +1084,7 @@ export default function CombinedPage() {
             <motion.div
               className="relative order-1 lg:order-2"
               initial={{ opacity: 0, x: 50 }}
-              animate={isAboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+              animate={isMobile ? { opacity: 1, x: 0 } : isAboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
               transition={{ duration: isMobile ? 0.8 : 0.8, delay: 0.2 }}
             >
               <div className="relative">
@@ -931,7 +1097,7 @@ export default function CombinedPage() {
                 />
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 

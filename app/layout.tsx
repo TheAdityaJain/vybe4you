@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "VYBE4you - Natural Skincare",
   description: "Premium organic skincare products for your natural beauty routine",
   generator: "v0.app",
+  icons: {
+    icon: "/favicon.ico",
+  },
 }
 
 export default function RootLayout({
@@ -18,7 +21,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" />
         <style>{`
 html {
   font-family: ${GeistSans.style.fontFamily};
