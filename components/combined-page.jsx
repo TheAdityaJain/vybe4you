@@ -1090,8 +1090,8 @@ export default function CombinedPage() {
                   }
                   transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.3 }}
                 >
-                  We believe organic skincare is a beautiful, luxurious way to care for your face. Our organic facewash
-                  formulations are designed to be gentle yet effective, providing you with the confidence that comes
+                  We believe organic skincare is a beautiful, luxurious way to care for your skin. Our organic products
+                  are designed to be gentle yet effective, providing you with the confidence that comes
                   from natural beauty.
                 </motion.p>
                 <motion.p
@@ -1102,8 +1102,8 @@ export default function CombinedPage() {
                   }
                   transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.5 }}
                 >
-                  Founded in 2025, VYBE represents a new generation of beauty products that prioritize both your
-                  health and the environment. Every facewash is carefully crafted with sustainably sourced organic
+                  Founded in 2025, VYBE represents a new generation of skincare products that prioritize both your
+                  health and the environment. Every product is carefully crafted with sustainably sourced organic
                   ingredients.
                 </motion.p>
               </div>
