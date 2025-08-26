@@ -1102,7 +1102,7 @@ export default function CombinedPage() {
                   }
                   transition={{ duration: isMobile ? 0.6 : 0.6, delay: 0.5 }}
                 >
-                  Founded in 2025, VYBE4You represents a new generation of beauty products that prioritize both your
+                  Founded in 2025, VYBE represents a new generation of beauty products that prioritize both your
                   health and the environment. Every facewash is carefully crafted with sustainably sourced organic
                   ingredients.
                 </motion.p>
