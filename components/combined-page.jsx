@@ -276,7 +276,7 @@ export default function CombinedPage() {
               onMouseLeave={() => setIsHovering(false)}
             >
               <motion.img
-                src="/favicon.ico"
+                src="/images/favicon.png"
                 alt="VYBE Logo"
                 className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 mr-2"
                 animate={
