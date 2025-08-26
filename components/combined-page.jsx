@@ -124,7 +124,7 @@ export default function CombinedPage() {
     {
       id: 1,
       name: "Everyday Glow Getter",
-      image: "/images/product-gentle-cleanser.png",
+      image: "/images/powder-facewash.jpg",
       description: "Powder Facewash",
       price: "₹299",
       rating: 4.8,
@@ -554,7 +554,7 @@ export default function CombinedPage() {
             >
               <div className="relative">
                 <motion.img
-                  src="/images/product-sensitive-skin.png"
+                  src="/images/powder-facewash.jpg"
                   alt="Natural Skincare"
                   className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl"
                   whileHover={
