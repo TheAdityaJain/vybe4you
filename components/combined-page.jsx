@@ -142,7 +142,7 @@ export default function CombinedPage() {
     },
     {
       id: 3,
-      name: "Face Scrub",
+      name: "Face Mask",
       image: "/face-scrub-box-packaging-skincare-product.png",
       description: "Coming Soon",
       price: "-",
