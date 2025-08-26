@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Menu, X, Leaf, Instagram, Facebook, Mail, Heart, Sparkles, Recycle, Droplets, Zap } from "lucide-react"
+import { Menu, X, Leaf, Instagram, Facebook, Mail, Heart, Sparkles, Droplets, Zap, Recycle } from "lucide-react"
 import { motion, useInView, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion"
 
 export default function CombinedPage() {
@@ -921,15 +921,15 @@ export default function CombinedPage() {
             viewport={{ once: true }}
           >
             <motion.h2
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-white px-2"
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light leading-relaxed sm:leading-tight text-white px-2"
               initial={{ opacity: 0, y: 30 }}
               animate={isEcoFriendlyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8 }}
             >
-              {"Eco-Friendly".split("").map((word, index) => (
+              {"Eco-Friendly".split("-").map((word, index) => (
                 <motion.span
                   key={index}
-                  className="inline-block mr-2"
+                  className="inline-block mr-1 sm:mr-2"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isEcoFriendlyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -944,10 +944,11 @@ export default function CombinedPage() {
                   }
                 >
                   {word}
+                  {index === 0 ? "-" : ""}
                 </motion.span>
               ))}
               <motion.span
-                className="inline-block mx-2"
+                className="inline-block ml-2"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={isEcoFriendlyInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
@@ -963,7 +964,7 @@ export default function CombinedPage() {
                 <Recycle className="w-6 h-6 sm:w-8 sm:h-8 inline text-primary" />
               </motion.span>
               <motion.span
-                className="inline-block italic"
+                className="inline-block ml-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isEcoFriendlyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
