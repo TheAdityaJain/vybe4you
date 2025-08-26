@@ -133,20 +133,22 @@ export default function CombinedPage() {
     {
       id: 2,
       name: "Face Exfoliator",
-      image: "/images/product-sensitive-skin.png",
+      image: "/face-exfoliator-tube-skincare-product.png",
       description: "Coming Soon",
       price: "-",
       rating: 4.9,
       color: "from-green-400/20 to-emerald-400/20",
+      comingSoon: true,
     },
     {
       id: 3,
-      name: "Face Mask",
-      image: "/images/product-deep-cleansing.png",
+      name: "Face Scrub",
+      image: "/face-scrub-box-packaging-skincare-product.png",
       description: "Coming Soon",
       price: "-",
       rating: 4.7,
       color: "from-purple-400/20 to-pink-400/20",
+      comingSoon: true,
     },
   ]
 
@@ -849,7 +851,7 @@ export default function CombinedPage() {
                       <motion.img
                         src={product.image || "/placeholder.svg"}
                         alt={product.name}
-                        className="w-full h-full object-cover object-center"
+                        className={`w-full h-full object-cover object-center ${product.comingSoon ? "blur-sm" : ""}`}
                         whileHover={
                           !isMobile
                             ? {
@@ -860,6 +862,18 @@ export default function CombinedPage() {
                         }
                         transition={{ duration: 0.5 }}
                       />
+                      {product.comingSoon && (
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                          <motion.div
+                            className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                          >
+                            <span className="text-foreground font-semibold text-sm sm:text-base">Coming Soon</span>
+                          </motion.div>
+                        </div>
+                      )}
                     </div>
                     <motion.div
                       className="p-4 sm:p-6 text-center space-y-3"
