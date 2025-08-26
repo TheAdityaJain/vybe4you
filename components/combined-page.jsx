@@ -275,6 +275,19 @@ export default function CombinedPage() {
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
+              <motion.img
+                src="/favicon.ico"
+                alt="VYBE Logo"
+                className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 mr-2"
+                animate={
+                  isHovering
+                    ? {
+                        scale: 1.1,
+                        filter: "drop-shadow(0 0 10px rgba(var(--primary), 0.5))",
+                      }
+                    : {}
+                }
+              />
               <motion.div
                 className="font-bold text-lg sm:text-xl lg:text-2xl text-primary tracking-tight"
                 animate={
@@ -286,7 +299,7 @@ export default function CombinedPage() {
                     : {}
                 }
               >
-                VYBE4you
+                VYBE
               </motion.div>
             </motion.div>
 
@@ -1134,7 +1147,7 @@ export default function CombinedPage() {
           >
             {[
               {
-                title: "VYBE4you",
+                title: "VYBE",
                 content: "Value Your Beauty Everyday with our all-natural organic skincare products. Since 2025.",
               },
               {
