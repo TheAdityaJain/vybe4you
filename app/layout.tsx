@@ -5,7 +5,7 @@ import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "VYBE4you - Natural Skincare",
+  title: "VYBE - Natural Skincare",
   description: "Premium organic skincare products for your natural beauty routine",
   generator: "v0.app",
   icons: {
