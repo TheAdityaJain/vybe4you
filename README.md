@@ -1,141 +1,360 @@
-# VYBE4YOU – Official Skincare Brand Website
+# VYBE4you - Skincare Landing Page
 
-A professionally developed, responsive, and brand-focused website built for **VYBE4YOU**, an emerging organic skincare brand offering natural and handcrafted beauty products.
+A modern, animated skincare landing page built with Next.js, React, Framer Motion, and Tailwind CSS.
 
----
+## Project Structure
 
-## 🌐 Live Website  
-▶ **https://vybeforyou.vercel.app/**
-
----
-
-## 📌 About the Project  
-**VYBE4YOU** is a commercial skincare website created to showcase products, communicate brand values, and provide customers with an easy way to learn about the brand and contact the business.
-
-The site is designed with:
-- A clean, modern user interface  
-- Strong brand identity  
-- Mobile-first responsiveness  
-- Fast performance and SEO-friendly structure  
-
----
-
-## 🎯 Client Requirements  
-This project was built for a real client with the following needs:
-
-- Simple, elegant, and brand-aligned design  
-- Product showcase section  
-- “Coming Soon” placeholders for upcoming products  
-- About section describing brand mission  
-- Contact information for customers  
-- Lightweight, fast, and scalable website  
-- Ready for future e-commerce expansion  
-
-All requirements were successfully delivered.
+\`\`\`
+├── app/
+│   ├── globals.css          # Global styles and Tailwind configuration
+│   ├── layout.tsx           # Root layout with metadata
+│   └── page.tsx             # Main page entry point
+├── components/
+│   ├── combined-page.jsx    # Main component that composes all sections
+│   ├── navbar.jsx           # Navigation bar with auto-hide on scroll
+│   ├── hero-section.jsx     # Hero section with animated text
+│   ├── features-section.jsx # Feature cards with icons
+│   ├── motivational-section.jsx # Animated quote section
+│   ├── products-section.jsx # Product cards with coming soon overlays
+│   ├── eco-friendly-section.jsx # Eco-friendly animated section
+│   ├── about-section.jsx    # About Us section
+│   ├── footer.jsx           # Footer with contact and social links
+│   └── background-effects.jsx # Mouse-following background elements
+├── public/
+│   ├── favicon.ico          # Site favicon (VYBE logo)
+│   └── images/              # All image assets
+└── README.md                # This documentation
+\`\`\`
 
 ---
 
-## 🚀 Key Features  
+## Components
 
-### ✔ Home Page  
-- Hero banner with the tagline: **“Value Your Beauty Everyday.”**  
-- Minimal and smooth navigation.
+### 1. Navbar (`components/navbar.jsx`)
 
-### ✔ Products Showcase  
-- Product cards with images, descriptions, and pricing.  
-- Includes “Coming Soon” products.  
-- Featured product: **Everyday Glow Getter – Powder Facewash (₹299)**  
+**Description:** Responsive navigation bar with auto-hide functionality on scroll.
 
-### ✔ About Section  
-- Brand story highlighting natural ingredients and eco-friendly skincare.
+**Features:**
+- Auto-hides when scrolling down, reappears when scrolling up
+- Mobile hamburger menu with slide-out drawer
+- Smooth scroll navigation (desktop) / instant navigation (mobile)
+- Glassmorphism effect with backdrop blur
 
-### ✔ Contact Section  
-- Business email, phone number, and location clearly displayed.
+**Props:**
+| Prop | Type | Description |
+|------|------|-------------|
+| `scrollToSection` | `function` | Function to handle navigation to sections |
+| `isMobile` | `boolean` | Whether the device is mobile |
 
-### ✔ Fully Responsive  
-- Optimized for mobile, tablet, and desktop devices.
-
-### ✔ Fast & Optimized  
-- Deployed on Vercel for high performance and global scalability.
-
----
-
-## 🛠 Tech Stack  
-
-| Category | Technologies |
-|---------|-------------|
-| **Frontend** | HTML, CSS, JavaScript |
-| **Framework** | Next.js / React |
-| **Styling** | Custom CSS / TailwindCSS |
-| **Hosting** | Vercel |
-| **Version Control** | Git & GitHub |
-
-### Explanation of Key Components  
-| File | Purpose |
-|------|---------|
-| **hero-section.jsx** | Displays hero banner + tagline |
-| **products-section.jsx** | Showcases product list |
-| **about-section.jsx** | Brand story and mission |
-| **eco-friendly-section.jsx** | Highlights natural & eco-safe ingredients |
-| **features-section.jsx** | Shows additional brand features |
-| **motivational-section.jsx** | Inspirational brand messaging |
-| **navbar.jsx** | Main navigation bar |
-| **footer.jsx** | Footer with contact/social info |
-| **background-effects.jsx** | Visual decorative elements |
-| **theme-provider.tsx** | Manages app-wide themes |
-| **combined-page.jsx** | Merges all sections into a final landing page |
-
-## 👨‍💻 My Role  
-
-As the developer of this commercial website, I handled:
-
-- UI/UX design and frontend development  
-- Branding-aligned website layout  
-- Product integration and content structuring  
-- Full responsiveness  
-- Performance optimization  
-- Vercel deployment  
-- Client communication & revisions  
-- Initial maintenance and updates  
+**Usage:**
+\`\`\`jsx
+<Navbar scrollToSection={scrollToSection} isMobile={isMobile} />
+\`\`\`
 
 ---
 
-## 🧭 User Flow  
+### 2. HeroSection (`components/hero-section.jsx`)
 
-1. User visits the **Home Page**.  
-2. Browses available products.  
-3. Reads the brand story in the **About** section.  
-4. Contacts the business using details provided.  
+**Description:** Main hero section with animated headline, product image, and CTA button.
 
----
+**Features:**
+- Word-by-word text animation on load
+- Hover effects on individual words
+- Responsive product image display
+- "Shop Now" CTA button
 
-## 🚧 Future Enhancements  
+**Props:**
+| Prop | Type | Description |
+|------|------|-------------|
+| `scrollToSection` | `function` | Function to scroll to products section |
 
-Planned for future iterations:
-
-- Shopping cart & checkout  
-- Payment gateway integration  
-- Admin dashboard for product management  
-- Customer reviews section  
-- Instagram feed integration  
-- SEO improvements  
-- Newsletter signup  
-
----
-
-## 💼 Client Details  
-
-**Brand:** VYBE4YOU  
-**Industry:** Organic Skincare  
-**Location:** Kota, Rajasthan, India  
-**Email:** vybe4you@gmail.com  
-**Phone:** +91 96946 06000  
+**Usage:**
+\`\`\`jsx
+<HeroSection scrollToSection={scrollToSection} />
+\`\`\`
 
 ---
 
-## ❤️ Developed With Care  
+### 3. FeaturesSection (`components/features-section.jsx`)
 
-This website was built commercially for a real skincare brand, focusing on simplicity, performance, and strong brand representation.
+**Description:** Grid of feature cards highlighting brand values.
+
+**Features:**
+- 4 feature cards: Natural Formula, Cruelty-Free, Expert Approved, Free Shipping
+- Staggered fade-in animations
+- Hover scale effects
+- Responsive grid layout (1 col mobile, 2 col tablet, 4 col desktop)
+
+**Props:** None
+
+**Usage:**
+\`\`\`jsx
+<FeaturesSection />
+\`\`\`
 
 ---
 
+### 4. MotivationalSection (`components/motivational-section.jsx`)
+
+**Description:** Animated quote section with background image overlay.
+
+**Features:**
+- Word-by-word text animation triggered on scroll
+- Interactive hover effects with glow
+- Organic ingredients background image
+- Mobile-optimized (animations disabled)
+
+**Props:**
+| Prop | Type | Description |
+|------|------|-------------|
+| `isMobile` | `boolean` | Whether the device is mobile |
+
+**Usage:**
+\`\`\`jsx
+<MotivationalSection isMobile={isMobile} />
+\`\`\`
+
+---
+
+### 5. ProductsSection (`components/products-section.jsx`)
+
+**Description:** Product showcase with cards and "Coming Soon" overlays.
+
+**Features:**
+- 3 product cards with images and descriptions
+- "Coming Soon" blur overlay for unreleased products
+- Hover animations and scaling effects
+- Responsive grid layout
+
+**Props:** None
+
+**Product Data Structure:**
+\`\`\`javascript
+{
+  name: "Product Name",
+  description: "Product description",
+  price: "₹XXX",
+  image: "/images/product.png",
+  comingSoon: false // or true for unreleased products
+}
+\`\`\`
+
+**Usage:**
+\`\`\`jsx
+<ProductsSection />
+\`\`\`
+
+---
+
+### 6. EcoFriendlySection (`components/eco-friendly-section.jsx`)
+
+**Description:** Animated section highlighting eco-friendly and skin-friendly values.
+
+**Features:**
+- Word-by-word text animation
+- Recycle and Heart icons
+- Background image with dark overlay
+- Mobile-optimized animations
+
+**Props:**
+| Prop | Type | Description |
+|------|------|-------------|
+| `isMobile` | `boolean` | Whether the device is mobile |
+
+**Usage:**
+\`\`\`jsx
+<EcoFriendlySection isMobile={isMobile} />
+\`\`\`
+
+---
+
+### 7. AboutSection (`components/about-section.jsx`)
+
+**Description:** About Us section with brand story and image.
+
+**Features:**
+- Two-column layout (text + image)
+- Fade-in animations on scroll
+- Key benefits list with checkmarks
+- Responsive stacking on mobile
+
+**Props:** None
+
+**Usage:**
+\`\`\`jsx
+<AboutSection />
+\`\`\`
+
+---
+
+### 8. Footer (`components/footer.jsx`)
+
+**Description:** Site footer with contact information and social links.
+
+**Features:**
+- Brand logo and tagline
+- Quick navigation links
+- Contact information (phone, email, location)
+- Social media icons (Instagram, Facebook, Twitter)
+- Copyright notice
+
+**Props:** None
+
+**Usage:**
+\`\`\`jsx
+<Footer />
+\`\`\`
+
+---
+
+### 9. BackgroundEffects (`components/background-effects.jsx`)
+
+**Description:** Decorative background elements that follow mouse movement.
+
+**Features:**
+- Mouse-tracking parallax effect
+- Multiple floating gradient orbs
+- Subtle movement animations
+- Performance-optimized with transform
+
+**Props:**
+| Prop | Type | Description |
+|------|------|-------------|
+| `mousePosition` | `{ x: number, y: number }` | Current mouse coordinates |
+
+**Usage:**
+\`\`\`jsx
+<BackgroundEffects mousePosition={mousePosition} />
+\`\`\`
+
+---
+
+### 10. CombinedPage (`components/combined-page.jsx`)
+
+**Description:** Main orchestrator component that composes all sections.
+
+**Features:**
+- Mobile detection using window width
+- Mouse position tracking for background effects
+- Scroll-to-section navigation handler
+- Section refs management
+
+**State:**
+| State | Type | Description |
+|-------|------|-------------|
+| `mousePosition` | `{ x: number, y: number }` | Mouse coordinates |
+| `isMobile` | `boolean` | Device type detection |
+
+**Usage:**
+\`\`\`jsx
+<CombinedPage />
+\`\`\`
+
+---
+
+## Styling
+
+### Color Palette
+
+| Color | CSS Variable | Usage |
+|-------|--------------|-------|
+| Primary | `--primary` | Buttons, accents |
+| Background | `--background` | Page background |
+| Foreground | `--foreground` | Text color |
+| Muted | `--muted` | Secondary backgrounds |
+| Accent | `--accent` | Hover states, highlights |
+
+### Typography
+
+- **Headings:** Playfair Display (serif)
+- **Body:** System font stack (sans-serif)
+
+### Responsive Breakpoints
+
+| Breakpoint | Width | Usage |
+|------------|-------|-------|
+| `sm` | 640px | Small tablets |
+| `md` | 768px | Tablets |
+| `lg` | 1024px | Laptops |
+| `xl` | 1280px | Desktops |
+
+---
+
+## Animations
+
+### Framer Motion Patterns
+
+**Fade In Up:**
+\`\`\`javascript
+initial={{ opacity: 0, y: 20 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.6 }}
+\`\`\`
+
+**Staggered Children:**
+\`\`\`javascript
+variants={{
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+}}
+\`\`\`
+
+**Hover Scale:**
+\`\`\`javascript
+whileHover={{ scale: 1.05 }}
+whileTap={{ scale: 0.95 }}
+\`\`\`
+
+---
+
+## Images
+
+### Public Images
+
+| Image | Path | Usage |
+|-------|------|-------|
+| Hero Product | `/images/product-deep-cleansing.png` | Hero section |
+| Gentle Cleanser | `/images/product-gentle-cleanser.png` | Products |
+| Face Exfoliator | `/face-exfoliator-tube-skincare-product.png` | Products (Coming Soon) |
+| Face Scrub | `/face-scrub-box-packaging-skincare-product.png` | Products (Coming Soon) |
+| Organic Ingredients | `/images/organic-ingredients.png` | Motivational section bg |
+| About Natural | `/images/about-natural-ingredients.png` | Eco-friendly section bg |
+| Skincare Routine | `/images/skincare-routine.png` | About section |
+
+---
+
+## Dependencies
+
+\`\`\`json
+{
+  "framer-motion": "^10.x",
+  "lucide-react": "^0.x",
+  "next": "^14.x",
+  "react": "^18.x",
+  "tailwindcss": "^4.x"
+}
+\`\`\`
+
+---
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Run development server: `npm run dev`
+4. Open [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Contact
+
+- **Instagram:** [@vybe4you](https://instagram.com/vybe4you)
+- **Email:** vybe4you@gmail.com
+- **Phone:** +91 9876543210
+
+---
+
+© 2025 VYBE4you. All rights reserved.
