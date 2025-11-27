@@ -9,10 +9,11 @@ The goal of the website is to:
 - Deliver a professional, aesthetic online identity
 - Support scalability for future e-commerce integrations
 
+This documentation provides a technical and functional explanation of the entire system.
+
 ## Live Website  
 ▶ **https://vybe4you.vercel.app/**
-##
-This documentation provides a technical and functional explanation of the entire system.
+
 ## Project Structure
 ```
 ├── app/
