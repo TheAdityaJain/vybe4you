@@ -5,7 +5,7 @@ A professionally developed, responsive, and brand-focused website built for **VY
 ---
 
 ## 🌐 Live Website  
-▶ **https://vybe4you.vercel.app/**
+▶ **https://vybeforyou.vercel.app/**
 
 ---
 
