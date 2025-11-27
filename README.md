@@ -4,27 +4,32 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 
 ## Project Structure
 
-\`\`\`
 ├── app/
-│   ├── globals.css          # Global styles and Tailwind configuration
-│   ├── layout.tsx           # Root layout with metadata
-│   └── page.tsx             # Main page entry point
+│   ├── globals.css                 # Global styles and Tailwind configuration
+│   ├── layout.tsx                  # Root layout with metadata and theme wrapper
+│   └── page.tsx                    # Main page entry point (renders CombinedPage)
+│
 ├── components/
-│   ├── combined-page.jsx    # Main component that composes all sections
-│   ├── navbar.jsx           # Navigation bar with auto-hide on scroll
-│   ├── hero-section.jsx     # Hero section with animated text
-│   ├── features-section.jsx # Feature cards with icons
-│   ├── motivational-section.jsx # Animated quote section
-│   ├── products-section.jsx # Product cards with coming soon overlays
-│   ├── eco-friendly-section.jsx # Eco-friendly animated section
-│   ├── about-section.jsx    # About Us section
-│   ├── footer.jsx           # Footer with contact and social links
-│   └── background-effects.jsx # Mouse-following background elements
+│   └── ui/
+│       ├── combined-page.jsx       # Composes all UI sections into one page
+│       ├── navbar.jsx              # Navigation bar with auto-hide on scroll
+│       ├── hero-section.jsx        # Hero section with animated heading & CTA
+│       ├── features-section.jsx    # Feature cards with icons and animations
+│       ├── motivational-section.jsx# Motivational animated quote section
+│       ├── products-section.jsx    # Product cards with "coming soon" overlays
+│       ├── eco-friendly-section.jsx# Eco-friendly values & animated illustrations
+│       ├── about-section.jsx       # Brand story and About Us section
+│       ├── footer.jsx              # Footer with contact details and social links
+│       ├── background-effects.jsx  # Mouse-follow floating background visuals
+│       └── theme-provider.tsx      # Dark/light mode theme provider
+│
 ├── public/
-│   ├── favicon.ico          # Site favicon (VYBE logo)
-│   └── images/              # All image assets
-└── README.md                # This documentation
-\`\`\`
+│   ├── favicon.ico                 # Brand favicon (VYBE logo)
+│   └── images/                     # Product images, backgrounds, brand assets
+│
+├── styles/                         # Additional custom styles (if any)
+│
+└── README.md                       # Project documentation
 
 ---
 
