@@ -3,7 +3,7 @@
 A modern, animated skincare landing page built with Next.js, React, Framer Motion, and Tailwind CSS.
 
 ## Project Structure
-
+```
 ├── app/
 │   ├── globals.css                 # Global styles and Tailwind configuration
 │   ├── layout.tsx                  # Root layout with metadata and theme wrapper
@@ -30,7 +30,7 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 ├── styles/                         # Additional custom styles (if any)
 │
 └── README.md                       # Project documentation
-
+```
 ---
 
 ## Components
