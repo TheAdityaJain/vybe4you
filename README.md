@@ -52,9 +52,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `isMobile` | `boolean` | Whether the device is mobile |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <Navbar scrollToSection={scrollToSection} isMobile={isMobile} />
-\`\`\`
+```
 
 ---
 
@@ -74,9 +75,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `scrollToSection` | `function` | Function to scroll to products section |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <HeroSection scrollToSection={scrollToSection} />
-\`\`\`
+```
 
 ---
 
@@ -93,9 +95,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 **Props:** None
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <FeaturesSection />
-\`\`\`
+```
 
 ---
 
@@ -115,9 +118,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `isMobile` | `boolean` | Whether the device is mobile |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <MotivationalSection isMobile={isMobile} />
-\`\`\`
+```
 
 ---
 
@@ -134,7 +138,8 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 **Props:** None
 
 **Product Data Structure:**
-\`\`\`javascript
+```
+javascript
 {
   name: "Product Name",
   description: "Product description",
@@ -142,12 +147,13 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
   image: "/images/product.png",
   comingSoon: false // or true for unreleased products
 }
-\`\`\`
+```
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <ProductsSection />
-\`\`\`
+```
 
 ---
 
@@ -167,9 +173,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `isMobile` | `boolean` | Whether the device is mobile |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <EcoFriendlySection isMobile={isMobile} />
-\`\`\`
+```
 
 ---
 
@@ -186,9 +193,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 **Props:** None
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <AboutSection />
-\`\`\`
+```
 
 ---
 
@@ -206,9 +214,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 **Props:** None
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <Footer />
-\`\`\`
+```
 
 ---
 
@@ -228,9 +237,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `mousePosition` | `{ x: number, y: number }` | Current mouse coordinates |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <BackgroundEffects mousePosition={mousePosition} />
-\`\`\`
+```
 
 ---
 
@@ -251,9 +261,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `isMobile` | `boolean` | Device type detection |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <CombinedPage />
-\`\`\`
+```
 
 ---
 
@@ -290,14 +301,16 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 ### Framer Motion Patterns
 
 **Fade In Up:**
-\`\`\`javascript
+```
+javascript
 initial={{ opacity: 0, y: 20 }}
 animate={{ opacity: 1, y: 0 }}
 transition={{ duration: 0.6 }}
-\`\`\`
+```
 
 **Staggered Children:**
-\`\`\`javascript
+```
+javascript
 variants={{
   hidden: { opacity: 0 },
   visible: {
@@ -305,13 +318,14 @@ variants={{
     transition: { staggerChildren: 0.1 }
   }
 }}
-\`\`\`
+```
 
 **Hover Scale:**
-\`\`\`javascript
+```
+javascript
 whileHover={{ scale: 1.05 }}
 whileTap={{ scale: 0.95 }}
-\`\`\`
+```
 
 ---
 
@@ -333,7 +347,8 @@ whileTap={{ scale: 0.95 }}
 
 ## Dependencies
 
-\`\`\`json
+```
+json
 {
   "framer-motion": "^10.x",
   "lucide-react": "^0.x",
@@ -341,7 +356,7 @@ whileTap={{ scale: 0.95 }}
   "react": "^18.x",
   "tailwindcss": "^4.x"
 }
-\`\`\`
+```
 
 ---
 
