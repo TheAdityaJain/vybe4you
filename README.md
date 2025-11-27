@@ -70,6 +70,20 @@ All requirements were successfully delivered.
 | **Hosting** | Vercel |
 | **Version Control** | Git & GitHub |
 
+### Explanation of Key Components  
+| File | Purpose |
+|------|---------|
+| **hero-section.jsx** | Displays hero banner + tagline |
+| **products-section.jsx** | Showcases product list |
+| **about-section.jsx** | Brand story and mission |
+| **eco-friendly-section.jsx** | Highlights natural & eco-safe ingredients |
+| **features-section.jsx** | Shows additional brand features |
+| **motivational-section.jsx** | Inspirational brand messaging |
+| **navbar.jsx** | Main navigation bar |
+| **footer.jsx** | Footer with contact/social info |
+| **background-effects.jsx** | Visual decorative elements |
+| **theme-provider.tsx** | Manages app-wide themes |
+| **combined-page.jsx** | Merges all sections into a final landing page |
 
 ## 👨‍💻 My Role  
 
