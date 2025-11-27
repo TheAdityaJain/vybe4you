@@ -152,36 +152,7 @@ export default function HeroSection({ isMobile, mousePosition, letterVariants, f
                     : {}
                 }
               />
-              <motion.div
-                className="absolute top-4 right-4 sm:top-8 sm:right-8 bg-background/95 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg border border-border"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: isMobile ? 0.5 : 1 }}
-                whileHover={
-                  !isMobile
-                    ? {
-                        scale: 1.1,
-                        rotate: [0, -5, 5, 0],
-                        boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
-                      }
-                    : {}
-                }
-                variants={floatingVariants}
-              >
-                <div className="flex items-center gap-2">
-                  <motion.img
-                    src="/images/product-gentle-cleanser.png"
-                    alt="Hydra Drops"
-                    className="w-6 h-6 sm:w-8 sm:h-8 rounded"
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                  />
-                  <div>
-                    <p className="text-xs font-medium">Hydra Drops</p>
-                    <p className="text-xs text-muted-foreground">$45.00</p>
-                  </div>
-                </div>
-              </motion.div>
+              
             </div>
           </motion.div>
         </div>
