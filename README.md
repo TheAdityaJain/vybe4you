@@ -1,31 +1,68 @@
 # VYBE4you - Skincare Landing Page
 
-A modern, animated skincare landing page built with Next.js, React, Framer Motion, and Tailwind CSS.
+VYBE4YOU is a commercial skincare website developed for a real organic beauty brand based in Kota, Rajasthan. The website serves as the brand’s official online presence, highlighting its natural skincare products, eco-friendly approach, and commitment to gentle, effective formulations.
+
+It is a modern, animated skincare landing page built with Next.js, React, Framer Motion, and Tailwind CSS.
+
+The goal of the website is to:
+- Showcase products
+- Communicate brand philosophy
+- Provide contact information
+- Deliver a professional, aesthetic online identity
+- Support scalability for future e-commerce integrations
+
+This documentation provides a technical and functional explanation of the entire system.
+
+---
+
+## Objectives of the Project
+
+- To establish a clean, modern, and responsive digital platform for the brand
+- To provide customers with an intuitive browsing experience
+- To highlight the brand’s focus on natural, sustainable products
+- To create a scalable architecture that can support future features like online shopping
+- To ensure mobile-first, fast, and SEO-friendly performance
+
+---
+
+## Target Audience
+
+- Customers interested in natural and eco-friendly skincare products
+- Visitors looking to understand the brand philosophy
+- Potential clients or distributors
+- Future developers or maintainers of the website
+
+---
 
 ## Project Structure
-
-\`\`\`
+```
 ├── app/
-│   ├── globals.css          # Global styles and Tailwind configuration
-│   ├── layout.tsx           # Root layout with metadata
-│   └── page.tsx             # Main page entry point
+│   ├── globals.css                 # Global styles and Tailwind configuration
+│   ├── layout.tsx                  # Root layout with metadata and theme wrapper
+│   └── page.tsx                    # Main page entry point (renders CombinedPage)
+│
 ├── components/
-│   ├── combined-page.jsx    # Main component that composes all sections
-│   ├── navbar.jsx           # Navigation bar with auto-hide on scroll
-│   ├── hero-section.jsx     # Hero section with animated text
-│   ├── features-section.jsx # Feature cards with icons
-│   ├── motivational-section.jsx # Animated quote section
-│   ├── products-section.jsx # Product cards with coming soon overlays
-│   ├── eco-friendly-section.jsx # Eco-friendly animated section
-│   ├── about-section.jsx    # About Us section
-│   ├── footer.jsx           # Footer with contact and social links
-│   └── background-effects.jsx # Mouse-following background elements
+│   └── ui/
+│       ├── combined-page.jsx       # Composes all UI sections into one page
+│       ├── navbar.jsx              # Navigation bar with auto-hide on scroll
+│       ├── hero-section.jsx        # Hero section with animated heading & CTA
+│       ├── features-section.jsx    # Feature cards with icons and animations
+│       ├── motivational-section.jsx# Motivational animated quote section
+│       ├── products-section.jsx    # Product cards with "coming soon" overlays
+│       ├── eco-friendly-section.jsx# Eco-friendly values & animated illustrations
+│       ├── about-section.jsx       # Brand story and About Us section
+│       ├── footer.jsx              # Footer with contact details and social links
+│       ├── background-effects.jsx  # Mouse-follow floating background visuals
+│       └── theme-provider.tsx      # Dark/light mode theme provider
+│
 ├── public/
-│   ├── favicon.ico          # Site favicon (VYBE logo)
-│   └── images/              # All image assets
-└── README.md                # This documentation
-\`\`\`
-
+│   ├── favicon.ico                 # Brand favicon (VYBE logo)
+│   └── images/                     # Product images, backgrounds, brand assets
+│
+├── styles/                         # Additional custom styles (if any)
+│
+└── README.md                       # Project documentation
+```
 ---
 
 ## Components
@@ -47,9 +84,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `isMobile` | `boolean` | Whether the device is mobile |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <Navbar scrollToSection={scrollToSection} isMobile={isMobile} />
-\`\`\`
+```
 
 ---
 
@@ -69,9 +107,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `scrollToSection` | `function` | Function to scroll to products section |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <HeroSection scrollToSection={scrollToSection} />
-\`\`\`
+```
 
 ---
 
@@ -88,9 +127,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 **Props:** None
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <FeaturesSection />
-\`\`\`
+```
 
 ---
 
@@ -110,9 +150,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `isMobile` | `boolean` | Whether the device is mobile |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <MotivationalSection isMobile={isMobile} />
-\`\`\`
+```
 
 ---
 
@@ -129,7 +170,8 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 **Props:** None
 
 **Product Data Structure:**
-\`\`\`javascript
+```
+javascript
 {
   name: "Product Name",
   description: "Product description",
@@ -137,12 +179,13 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
   image: "/images/product.png",
   comingSoon: false // or true for unreleased products
 }
-\`\`\`
+```
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <ProductsSection />
-\`\`\`
+```
 
 ---
 
@@ -162,9 +205,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `isMobile` | `boolean` | Whether the device is mobile |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <EcoFriendlySection isMobile={isMobile} />
-\`\`\`
+```
 
 ---
 
@@ -181,9 +225,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 **Props:** None
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <AboutSection />
-\`\`\`
+```
 
 ---
 
@@ -201,9 +246,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 **Props:** None
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <Footer />
-\`\`\`
+```
 
 ---
 
@@ -223,9 +269,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `mousePosition` | `{ x: number, y: number }` | Current mouse coordinates |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <BackgroundEffects mousePosition={mousePosition} />
-\`\`\`
+```
 
 ---
 
@@ -246,9 +293,10 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 | `isMobile` | `boolean` | Device type detection |
 
 **Usage:**
-\`\`\`jsx
+```
+jsx
 <CombinedPage />
-\`\`\`
+```
 
 ---
 
@@ -285,14 +333,16 @@ A modern, animated skincare landing page built with Next.js, React, Framer Motio
 ### Framer Motion Patterns
 
 **Fade In Up:**
-\`\`\`javascript
+```
+javascript
 initial={{ opacity: 0, y: 20 }}
 animate={{ opacity: 1, y: 0 }}
 transition={{ duration: 0.6 }}
-\`\`\`
+```
 
 **Staggered Children:**
-\`\`\`javascript
+```
+javascript
 variants={{
   hidden: { opacity: 0 },
   visible: {
@@ -300,13 +350,14 @@ variants={{
     transition: { staggerChildren: 0.1 }
   }
 }}
-\`\`\`
+```
 
 **Hover Scale:**
-\`\`\`javascript
+```
+javascript
 whileHover={{ scale: 1.05 }}
 whileTap={{ scale: 0.95 }}
-\`\`\`
+```
 
 ---
 
@@ -328,7 +379,8 @@ whileTap={{ scale: 0.95 }}
 
 ## Dependencies
 
-\`\`\`json
+```
+json
 {
   "framer-motion": "^10.x",
   "lucide-react": "^0.x",
@@ -336,7 +388,28 @@ whileTap={{ scale: 0.95 }}
   "react": "^18.x",
   "tailwindcss": "^4.x"
 }
-\`\`\`
+```
+
+---
+
+## Limitations
+
+- No full e-commerce features (cart, checkout) yet
+- No admin panel for managing products
+- No backend/API integration
+- “Coming Soon” products not dynamically loaded
+
+---
+
+## Future Enhancements
+
+- Implement complete e-commerce system
+- Add payment gateway
+- Add an admin panel (CMS)
+- Customer reviews/testimonials
+- Stock management system
+- Newsletter subscription
+- SEO improvements
 
 ---
 
