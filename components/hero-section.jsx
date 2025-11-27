@@ -99,7 +99,6 @@ export default function HeroSection({ isMobile, mousePosition, letterVariants, f
               <motion.div
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
                   y: -5,
                 }}
                 whileTap={{ scale: 0.95 }}
@@ -107,16 +106,10 @@ export default function HeroSection({ isMobile, mousePosition, letterVariants, f
               >
                 <Button
                   size="lg"
-                  className="bg-foreground hover:bg-foreground/90 text-background px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-medium rounded-full relative overflow-hidden group w-full sm:w-auto"
+                  className="bg-foreground hover:bg-foreground/90 text-background px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-medium rounded-full w-full sm:w-auto"
                   onClick={() => scrollToSection("products")}
                 >
-                  <motion.span
-                    className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20"
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: "100%" }}
-                    transition={{ duration: 0.5 }}
-                  />
-                  <span className="relative z-10">Explore</span>
+                  Explore
                 </Button>
               </motion.div>
             </motion.div>
@@ -152,7 +145,6 @@ export default function HeroSection({ isMobile, mousePosition, letterVariants, f
                     : {}
                 }
               />
-              
             </div>
           </motion.div>
         </div>
