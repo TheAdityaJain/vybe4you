@@ -1,7 +1,18 @@
 # VYBE4you - Skincare Landing Page
 
-A modern, animated skincare landing page built with Next.js, React, Framer Motion, and Tailwind CSS.
+VYBE4YOU is a commercial skincare website developed for a real organic beauty brand based in Kota, Rajasthan. The website serves as the brand’s official online presence, highlighting its natural skincare products, eco-friendly approach, and commitment to gentle, effective formulations. It is a modern, animated skincare landing page built with Next.js, React, Framer Motion, and Tailwind CSS.
 
+The goal of the website is to:
+- Showcase products
+- Communicate brand philosophy
+- Provide contact information
+- Deliver a professional, aesthetic online identity
+- Support scalability for future e-commerce integrations
+
+## Live Website  
+▶ **https://vybe4you.vercel.app/**
+
+This documentation provides a technical and functional explanation of the entire system.
 ## Project Structure
 ```
 ├── app/
