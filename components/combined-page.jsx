@@ -5,7 +5,7 @@ import { useMotionValue, useSpring } from "framer-motion"
 
 import Navbar from "@/components/navbar"
 import BackgroundEffects from "@/components/background-effects"
-import HeroSection from "@/components/hero-section"
+import ScrollyCanvas from "@/components/scrolly-canvas"
 import FeaturesSection from "@/components/features-section"
 import MotivationalSection from "@/components/motivational-section"
 import ProductsSection from "@/components/products-section"
@@ -121,18 +121,12 @@ export default function CombinedPage() {
   }
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-background relative">
+    <main className="min-h-screen overflow-clip bg-background relative">
       {!isMobile && <BackgroundEffects mousePosition={mousePosition} />}
 
       <Navbar scrollToSection={scrollToSection} />
 
-      <HeroSection
-        isMobile={isMobile}
-        mousePosition={mousePosition}
-        letterVariants={letterVariants}
-        floatingVariants={floatingVariants}
-        scrollToSection={scrollToSection}
-      />
+      <ScrollyCanvas scrollToSection={scrollToSection} />
 
       <FeaturesSection isMobile={isMobile} containerVariants={containerVariants} itemVariants={itemVariants} />
 
